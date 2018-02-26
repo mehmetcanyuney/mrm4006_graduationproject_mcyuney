@@ -1,10 +1,13 @@
-import speech_recognition as sr
+from stt import stt
+from tts import tts
 
-r = sr.Recognizer()
+# en-US for english and tr for Turkish #
+stt_op = stt(language="en-US")
 
-with sr.Microphone() as source:
-    print("Say Something!")
-    audio = r.listen(source)
-    print("Audio received.")
 
-print("You said : " + r.recognize_google(audio,language="tr"))
+texti = stt_op.speech_to_text()
+print("You said = " + texti)
+
+tts_op = tts()
+
+tts_op.text_to_speech(text=texti)
