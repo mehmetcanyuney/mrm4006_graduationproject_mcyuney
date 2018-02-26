@@ -6,5 +6,8 @@ class tts:
         self.engine = pyttsx3.init()
 
     def text_to_speech(self, text="Empty String"):
-        self.engine.say(text)
-        self.engine.runAndWait()
+        if text == "Error Text":
+            print("There is something wrong with google service!")
+        else:
+            self.engine.say(text)
+            self.engine.runAndWait()
