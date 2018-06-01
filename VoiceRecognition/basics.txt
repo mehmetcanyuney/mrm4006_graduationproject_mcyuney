@@ -1,0 +1,10 @@
+0 kapa sön kaldır çek azalt
+1 aç yak indir art
+2 daha
+3 yarım yarı
+4 biraz az
+5 kaç ne
+6 yükseğe yüksek
+7 orta
+8 düşüğe düşük
+9 otomatik otomatiğe

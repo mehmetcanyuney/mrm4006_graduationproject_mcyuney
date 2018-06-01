@@ -1,0 +1,6 @@
+0 kullanıcı
+1 sıcaklık derece oda temperature perde güneş sistem klima ışık işık ekonomi set fan mod
+2 internet ara bak
+3 hava durumu
+4 gün saat tarih
+1 ekran
