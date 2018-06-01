@@ -57,4 +57,17 @@ class InternetHandler:
         self.url = "https://www.google.com.tr/?#q=" + searching_data
         webbrowser.open(self.url, new=new)
 
+    def check_web_music(self, searching_data):
+        searching_data = searching_data.lower()
+        searching_data = helpFunctions.transform_to_eng(searching_data)
+        for x in range(0, len(searching_data)):
+            if searching_data[x] == " ":
+                searching_data = searching_data[:x] + "+" + searching_data[(x + 1):]
 
+        self.url = "https://www.youtube.com/results?search_query=" + searching_data
+        source = urllib.request.urlopen(self.url).read()
+        soup = bs.BeautifulSoup(source, "lxml")
+
+        self.url = soup.find_all('a', class_="yt-uix-tile-link")[0].get("href")
+        self.url = "https://www.youtube.com" + self.url
+        webbrowser.open(self.url, new=1)

@@ -223,6 +223,17 @@ class Recognition:
                 self.voice_handler.text_to_speech("Hangi yemeğin tarifini görmek istersin?")
                 recipe = self.voice_handler.speech_to_text()
                 self.internet_handler.search_web_food(recipe)
+            elif re.search("müzik", search) is not None:
+                if re.search("ingilizce", search) is not None or re.search("İngilizce", search) is not None:
+                    self.voice_handler.text_to_speech("Tabii, hangi müziği dinlemek istersin?")
+                    self.voice_handler.language = "en-us"
+                    music_name = self.voice_handler.speech_to_text()
+                    self.voice_handler.language = "tr"
+                else:
+                    self.voice_handler.text_to_speech("Tabii, hangi müziği dinlemek istersin?")
+                    music_name = self.voice_handler.speech_to_text()
+
+                self.internet_handler.check_web_music(music_name)
             else:
                 self.internet_handler.check_web_google(search)
         # weather forecast function
