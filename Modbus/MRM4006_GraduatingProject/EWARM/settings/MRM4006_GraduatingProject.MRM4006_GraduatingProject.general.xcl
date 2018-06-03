@@ -1,0 +1,15 @@
+"D:\Program Files\IAR Systems\Embedded Workbench 7.3\arm\bin\armproc.dll" 
+
+"D:\Program Files\IAR Systems\Embedded Workbench 7.3\arm\bin\armstlink2.dll" 
+
+"D:\Documents\STM32F4 Projects\MRM4006_GraduatingProject\EWARM\MRM4006_GraduatingProject\Exe\MRM4006_GraduatingProject.out" 
+
+--plugin "D:\Program Files\IAR Systems\Embedded Workbench 7.3\arm\bin\armbat.dll" 
+
+--device_macro "D:\Program Files\IAR Systems\Embedded Workbench 7.3\arm\config\debugger\ST\STM32F4xx.dmac" 
+
+--flash_loader "D:\Program Files\IAR Systems\Embedded Workbench 7.3\arm\config\flashloader\ST\FlashSTM32F411xE.board" 
+
+
+
+
