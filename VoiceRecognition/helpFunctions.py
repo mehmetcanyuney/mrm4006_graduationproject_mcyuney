@@ -58,7 +58,7 @@ def search_number_string(string):
 
 
 def check_time():
-    locale.setlocale(locale.LC_ALL, 'turkish')
+    locale.setlocale(locale.LC_ALL, '')
     now = datetime.datetime.now()
     time = str(now.hour)
     time = time + "." + str(now.minute)
@@ -66,7 +66,7 @@ def check_time():
 
 
 def check_date():
-    locale.setlocale(locale.LC_ALL, 'turkish')
+    locale.setlocale(locale.LC_ALL, '')
     now = datetime.datetime.now()
     date = str(datetime.datetime.strftime(now, "%d")) + " "
     date = date + str(datetime.datetime.strftime(now, "%B")) + " "

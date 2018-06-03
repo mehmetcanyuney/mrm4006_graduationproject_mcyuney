@@ -1,8 +1,8 @@
 from VoiceHandler import VoiceHandler
 from InternetHandler import InternetHandler
+from UartHandler import UartHandler
 import helpFunctions
 import re
-import winsound
 
 
 class Recognition:
@@ -48,6 +48,9 @@ class Recognition:
         # creating internet searcher
         self.internet_handler = InternetHandler()
 
+        # creating uart handler
+        self.uart_handler = UartHandler(baudrate=9600)
+
     def do_recognition_and_action(self, text):
         text = text.lower()
 
@@ -73,11 +76,6 @@ class Recognition:
             self.voice_handler.text_to_speech(text="Bu cümleden bir anlam çıkartamadım.")
             self.voice_handler.text_to_speech(text="Bu cümlede hangi fonksiyonu temsil ediyor acaba?")
             # func = input("Fonksiyon seç : ")
-            # beep find in raspberry
-            duration = 100
-            freq = 440
-            winsound.Beep(freq, duration)
-            # beep ends
             func = helpFunctions.basic_numbers(self.voice_handler.speech_to_text())
             self.voice_handler.text_to_speech(text="Bu cümledeki anahtar kelime ne acaba?")
             # key = input("Anahtar Kelimeyi seç : ")
@@ -124,11 +122,12 @@ class Recognition:
                 if on_off_code is None:
                     sent_data.append(stm_code)
                     sent_data.append(int(number))
-                    return sent_data
+                    self.uart_handler.writeReg(sent_data)
                 elif on_off_code:
                     if more_code == 1:
                         # Uart handler must take value
-                        current_value = int(input("mevcut değeri al : "))
+                        # current_value = int(input("mevcut değeri al : "))
+                        current_value = self.uart_handler.readReg([stm_code, "b"])
                         if re.search("yüzde", text) is not None or re.search("%", text) is not None:
                             if current_value - number < 0:
                                 temp_text = "Verilen değerde bir hata var. Şu anki değer " + str(current_value)
@@ -137,19 +136,20 @@ class Recognition:
                                 sent_data.append(stm_code)
                                 sent_data.append(current_value - number)
                                 # uart handler
-                                print(sent_data)
+                                self.uart_handler.writeReg(sent_data)
                         else:
                             sent_data.append(stm_code)
                             sent_data.append(number)
                             # uart handler
-                            print(sent_data)
+                            self.uart_handler.writeReg(sent_data)
 
                 elif not on_off_code:
                     if more_code == 1:
                         # uart handler must take value
-                        current_value = int(input("mevcut değeri al : "))
+                        # current_value = int(input("mevcut değeri al : "))
+                        current_value = self.uart_handler.readReg([stm_code, "b"])
                         # uart handler
-                        print(current_value - number)
+                        self.uart_handler.writeReg(sent_data)
 
             else:
                 for t in range(3, len(self.basic_list)):
@@ -159,61 +159,63 @@ class Recognition:
                             selection_code = int(words[0])
                 if selection_code == 5:
                     sent_data.append(stm_code)
-                    sent_data.append(-1)
+                    sent_data.append("b")
                     # uart handler
-                    print(sent_data)
+                    current_value = self.uart_handler.readReg(sent_data)
+                    temp_text = "Aradığın değer" + str(current_value)
+                    self.voice_handler.text_to_speech(temp_text)
                 elif selection_code == 6:
                     sent_data.append(stm_code)
-                    sent_data.append(0)
+                    sent_data.append(4)
                     # uart handler
-                    print(sent_data)
+                    self.uart_handler.writeReg(sent_data)
                 elif selection_code == 7:
-                    sent_data.append(stm_code)
-                    sent_data.append(1)
-                    # uart handler
-                    print(sent_data)
-                elif selection_code == 8:
-                    sent_data.append(stm_code)
-                    sent_data.append(2)
-                    # uart handler
-                    print(sent_data)
-                elif selection_code == 9:
                     sent_data.append(stm_code)
                     sent_data.append(3)
                     # uart handler
-                    print(sent_data)
+                    self.uart_handler.writeReg(sent_data)
+                elif selection_code == 8:
+                    sent_data.append(stm_code)
+                    sent_data.append(0)
+                    # uart handler
+                    self.uart_handler.writeReg(sent_data)
+                elif selection_code == 9:
+                    sent_data.append(stm_code)
+                    sent_data.append(5)
+                    # uart handler
+                    self.uart_handler.writeReg(sent_data)
                 elif on_off_code == 1:
                     if selection_code == 4:
                         sent_data.append(stm_code)
                         sent_data.append(-10)
                         # uart handler
-                        print(sent_data)
+                        self.uart_handler.writeReg(sent_data)
                     elif selection_code == 3:
                         sent_data.append(stm_code)
                         sent_data.append(50)
                         # uart handler
-                        print(sent_data)
+                        self.uart_handler.writeReg(sent_data)
                     else:
                         sent_data.append(stm_code)
                         sent_data.append(100)
                         # uart handler
-                        print(sent_data)
+                        self.uart_handler.writeReg(sent_data)
                 else:
                     if selection_code == 4:
                         sent_data.append(stm_code)
                         sent_data.append(-5)
                         # uart handler
-                        print(sent_data)
+                        self.uart_handler.writeReg(sent_data)
                     elif selection_code == 3:
                         sent_data.append(stm_code)
                         sent_data.append(50)
                         # uart handler
-                        print(sent_data)
+                        self.uart_handler.writeReg(sent_data)
                     else:
                         sent_data.append(stm_code)
                         sent_data.append(0)
                         # uart handler
-                        print(sent_data)
+                        self.uart_handler.writeReg(sent_data)
         # internet functions
         elif function_code == 2:
             # internet search

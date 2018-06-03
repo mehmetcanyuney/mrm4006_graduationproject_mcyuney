@@ -1,5 +1,8 @@
 import speech_recognition as sr
 import pyttsx3
+from gtts import gTTS
+import os
+import pygame
 
 
 class VoiceHandler:
@@ -9,8 +12,11 @@ class VoiceHandler:
         self.language = language
         self.audio = None
 
-        self.engine = pyttsx3.init()
-        self.engine.setProperty('rate', 150)
+        # self.engine = pyttsx3.init()
+        # self.engine.setProperty('rate', 150)
+
+        pygame.init()
+        pygame.mixer.init()
 
     def speech_to_text(self):
         with sr.Microphone(sample_rate=48000) as source:
@@ -23,5 +29,8 @@ class VoiceHandler:
         return ret_text
 
     def text_to_speech(self, text="Sistemde bir hata oluştu."):
-        self.engine.say(text)
-        self.engine.runAndWait()
+        # self.engine.say(text)
+        # self.engine.runAndWait()
+        self.tts = gTTS(text=text, lang=self.language)
+        self.tts.save("temp.wav")
+        os.system("mpg321 temp.wav")
