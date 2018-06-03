@@ -2,8 +2,8 @@
 1 mod ısıtma soğutma
 2 fan pervane
 3 set sıcaklık oda derece
-4 ekran kilit
-8 ekonomi set ayar
+4 ekran kilit tuş
+8 ekonomi set
 10 ekonomi mod modu
 50 perde güneş
 51 ışık parlak işık

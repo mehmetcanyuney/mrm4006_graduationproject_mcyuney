@@ -31,8 +31,3 @@ class UartHandler:
             data_string = data_string + "aaa"
 
         self.ser.write(data_string.encode())
-
-# for testing
-rg = UartHandler(baudrate=9600)
-
-rg.writeReg([51,50])

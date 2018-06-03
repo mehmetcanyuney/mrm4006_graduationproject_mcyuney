@@ -3,4 +3,5 @@
 2 internet ara bak
 3 hava durumu
 4 gün saat tarih
+5 kapat sistem
 1 ekran
