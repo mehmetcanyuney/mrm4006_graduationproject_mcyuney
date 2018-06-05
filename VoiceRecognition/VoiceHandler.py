@@ -3,7 +3,13 @@ import pyttsx3
 from gtts import gTTS
 import os
 import pygame
+import RPi.GPIO as GPIO
 
+
+GPIO.setmode(GPIO.BCM)
+redLed = 22
+GPIO.setup(redLed, GPIO.OUT)
+GPIO.output(redLed, GPIO.LOW)
 
 class VoiceHandler:
     def __init__(self, language="tr"):
@@ -21,8 +27,10 @@ class VoiceHandler:
     def speech_to_text(self):
         with sr.Microphone(sample_rate=48000) as source:
             print("Say Something!")
+            GPIO.output(redLed, GPIO.HIGH)
             self.audio = self.recorder.listen(source)
             print("Audio received.")
+            GPIO.output(redLed, GPIO.LOW)
 
         ret_text = self.recorder.recognize_google(self.audio, language=self.language)
 

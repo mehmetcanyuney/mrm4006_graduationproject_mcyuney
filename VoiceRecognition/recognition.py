@@ -8,6 +8,9 @@ import sys
 
 class Recognition:
     def __init__(self):
+        # text variable for GUI
+        self.text = None
+        
         # necessary lists
         self.function_list = []
         self.stm_list = []
@@ -81,6 +84,7 @@ class Recognition:
             self.voice_handler.text_to_speech(text="Bu cümledeki anahtar kelime ne acaba?")
             # key = input("Anahtar Kelimeyi seç : ")
             key = str(self.voice_handler.speech_to_text())
+            self.function_list.append(str(func) + " " + key)
             write_line = "\n" + str(func) + " " + key
             function_file = open("functions.txt", "a", encoding='utf8')
             function_file.writelines(write_line)
@@ -236,7 +240,7 @@ class Recognition:
                         sent_data.append(0)
                         # uart handler
                         self.uart_handler.writeReg(sent_data)
-            print ("Done")
+            print (sent_data)
         # internet functions
         elif function_code == 2:
             # internet search
@@ -267,7 +271,8 @@ class Recognition:
             self.voice_handler.text_to_speech("Hangi şehirin hava durumunu öğrenmek istersin")
             city = self.voice_handler.speech_to_text()
             location = city + "," + country
-            helpFunctions.check_weather(location)
+            self.voice_handler.text_to_speech(helpFunctions.check_weather(location))
+            self.text = helpFunctions.check_weather(location)
         # date and hour questioning
         elif function_code == 4:
             if re.search("saat", text) is not None:

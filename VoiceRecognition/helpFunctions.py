@@ -85,3 +85,7 @@ def check_weather(location):
     print(w.get_humidity())
     print(w.get_temperature('celsius'))
 
+    dict = w.get_temperature('celsius')
+    return str(dict['temp'])
+
+
