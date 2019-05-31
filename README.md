@@ -1,5 +1,5 @@
 # GraduatingProject
-Smart Home Project With Voice Recognition
+Smart Home Automation Design Provided By Sound Control
 Made by Mehmet Can Yüney
 
 On Progress...
